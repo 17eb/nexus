@@ -1,0 +1,38 @@
+[project]
+name = "nexus"
+version = "0.1.0"
+description = "Bored Pile Testing Management (BPTM)"
+requires-python = ">=3.12"
+dependencies = [
+    "django>=5,<6",
+    "psycopg[binary]>=3.1",
+    "djangorestframework>=3.15",
+    "openpyxl>=3.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "pytest-django>=4.8",
+    "factory_boy>=3.3",
+    "import-linter>=2.0",
+]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "nexus.settings.test"
+python_files = ["test_*.py"]
+testpaths = ["apps"]
+
+[tool.importlinter]
+root_package = "apps"
+
+[[tool.importlinter.contracts]]
+name = "registry.import_piles is internal to registry.services"
+type = "forbidden"
+source_modules = [
+    "apps.registry.models",
+    "apps.registry.admin",
+]
+forbidden_modules = [
+    "apps.registry.import_piles",
+]
