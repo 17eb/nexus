@@ -142,6 +142,38 @@ def test_reparenting_reports_changed_and_appears_in_reparented_list():
     assert report.reparented == ["P-1"]
 
 
+def test_design_row_for_pile_no_in_different_package_is_a_row_error_not_a_new_pile():
+    package_a = PackageFactory(code="S-04", crs_epsg=3123)
+    package_b = PackageFactory(code="S-05", crs_epsg=3123)
+    services.import_piles(
+        package=package_a,
+        coordinate_type="design",
+        file_obj=make_csv_bytes(DESIGN_HEADERS, [design_row(pile_no="P-1", label="A")]),
+        filename="piles.csv",
+        apply=True,
+    )
+
+    report = services.import_piles(
+        package=package_b,
+        coordinate_type="design",
+        file_obj=make_csv_bytes(DESIGN_HEADERS, [design_row(pile_no="P-1", label="A")]),
+        filename="piles.csv",
+        apply=True,
+    )
+
+    assert report.created == 0
+    assert report.errored == 1
+    error_row = report.rows[0]
+    assert error_row.outcome == "error"
+    assert "S-04" in error_row.errors[0]
+    assert "S-05" in error_row.errors[0]
+
+    # still exactly one pile, still under package_a — no duplicate/reparented row created
+    assert Pile.objects.filter(pile_no="P-1").count() == 1
+    assert Pile.objects.get(pile_no="P-1").pile_cap.structure.package_id == package_a.id
+    assert not Structure.objects.filter(package=package_b).exists()
+
+
 def test_mixed_valid_and_invalid_rows():
     package = PackageFactory(crs_epsg=3123)
     rows = [

@@ -54,8 +54,17 @@ def upsert_design_row(
     }
 
     try:
-        pile = Pile.objects.get(pile_no=clean["pile_no"])
+        pile = Pile.objects.get(
+            pile_no=clean["pile_no"], pile_cap__structure__package=package
+        )
     except Pile.DoesNotExist:
+        other_pile = Pile.objects.filter(pile_no=clean["pile_no"]).first()
+        if other_pile is not None:
+            other_package = other_pile.pile_cap.structure.package
+            raise DomainError(
+                f"pile_no: {clean['pile_no']!r} belongs to package "
+                f"{other_package.code!r}, not {package.code!r}"
+            )
         Pile.objects.create(
             pile_no=clean["pile_no"], created_by_run=import_run, **design_fields
         )
