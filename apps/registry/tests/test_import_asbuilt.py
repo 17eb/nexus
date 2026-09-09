@@ -118,6 +118,31 @@ def test_asbuilt_second_run_with_identical_values_reports_update_not_changed():
     assert second_run_id != first_run_id  # asbuilt_run still advances on a no-op match
 
 
+def test_asbuilt_row_for_pile_in_different_package_is_a_row_error():
+    package_a = PackageFactory(code="S-04", crs_epsg=3123)
+    package_b = PackageFactory(code="S-05", crs_epsg=3123)
+    _seed_pile(package_a, pile_no="P-1")
+
+    report = services.import_piles(
+        package=package_b,
+        coordinate_type="as_built",
+        file_obj=make_csv_bytes(ASBUILT_HEADERS, [asbuilt_row(pile_no="P-1")]),
+        filename="asbuilt.csv",
+        apply=True,
+    )
+
+    assert report.errored == 1
+    assert report.changed == 0
+    error_row = report.rows[0]
+    assert error_row.outcome == "error"
+    assert "S-04" in error_row.errors[0]
+    assert "S-05" in error_row.errors[0]
+
+    pile = Pile.objects.get(pile_no="P-1")
+    assert pile.asbuilt_e is None
+    assert pile.asbuilt_run_id is None
+
+
 def test_asbuilt_unknown_pile_no_is_a_row_error_but_others_still_apply():
     package = PackageFactory(crs_epsg=3123)
     _seed_pile(package, pile_no="P-1")

@@ -88,8 +88,17 @@ def upsert_asbuilt_row(
     row_number: int, clean: dict, package: Package, import_run: ImportRun
 ) -> RowReport:
     try:
-        pile = Pile.objects.get(pile_no=clean["pile_no"])
+        pile = Pile.objects.get(
+            pile_no=clean["pile_no"], pile_cap__structure__package=package
+        )
     except Pile.DoesNotExist:
+        other_pile = Pile.objects.filter(pile_no=clean["pile_no"]).first()
+        if other_pile is not None:
+            other_package = other_pile.pile_cap.structure.package
+            raise DomainError(
+                f"pile_no: {clean['pile_no']!r} belongs to package "
+                f"{other_package.code!r}, not {package.code!r}"
+            )
         raise DomainError(
             f"pile_no: {clean['pile_no']!r} does not exist — run a design import first"
         )
