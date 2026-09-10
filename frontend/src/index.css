@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+/* Tailwind v4 dark mode via a class on <html>, per CLAUDE.md's
+   "Dark and light theme via Tailwind `class` strategy". */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * THE theme file. Every color used anywhere in this app must come from
+ * a CSS variable defined here. No hardcoded hex outside this block.
+ *
+ * Raw RGB triplets live under bare names; @theme below maps them to
+ * Tailwind color tokens (bg-background, text-foreground, ...). Keep
+ * these two sets of names distinct — giving them the same name creates
+ * a circular custom-property reference that silently resolves to
+ * nothing.
+ */
+:root {
+  --background: 255 255 255;
+  --surface: 246 247 249;
+  --foreground: 15 23 42;
+  --muted: 100 116 139;
+  --border: 226 232 240;
+  --primary: 37 99 235;
+  --primary-foreground: 255 255 255;
+  --danger: 220 38 38;
+}
+
+.dark {
+  --background: 15 23 42;
+  --surface: 30 41 59;
+  --foreground: 241 245 249;
+  --muted: 148 163 184;
+  --border: 51 65 85;
+  --primary: 96 165 250;
+  --primary-foreground: 15 23 42;
+  --danger: 248 113 113;
+}
+
+@theme {
+  --color-background: rgb(var(--background));
+  --color-surface: rgb(var(--surface));
+  --color-foreground: rgb(var(--foreground));
+  --color-muted: rgb(var(--muted));
+  --color-border: rgb(var(--border));
+  --color-primary: rgb(var(--primary));
+  --color-primary-foreground: rgb(var(--primary-foreground));
+  --color-danger: rgb(var(--danger));
+}
+
+body {
+  @apply bg-background text-foreground;
+}

@@ -49,7 +49,8 @@ def validate_design_row(row: dict[str, str], package_crs_epsg: int) -> tuple[dic
 
     kind_raw = row.get("structure_kind", "").strip().lower()
     if kind_raw not in dict(Structure.Kind.choices):
-        errors.append(f"structure_kind: {row.get('structure_kind')!r} is not one of {list(dict(Structure.Kind.choices))}")
+        valid_kinds = list(dict(Structure.Kind.choices))
+        errors.append(f"structure_kind: {row.get('structure_kind')!r} is not one of {valid_kinds}")
     clean["structure_kind"] = kind_raw
 
     cap_type_raw = row.get("cap_type", "").strip().lower()
@@ -64,9 +65,9 @@ def validate_design_row(row: dict[str, str], package_crs_epsg: int) -> tuple[dic
         clean[field] = _to_decimal(row.get(field, ""), field, errors)
 
     for field in POSITIVE_FIELDS:
-        value = clean.get(field)
-        if value is not None and value <= 0:
-            errors.append(f"{field}: must be positive, got {value}")
+        positive_value = clean.get(field)
+        if positive_value is not None and positive_value <= 0:
+            errors.append(f"{field}: must be positive, got {positive_value}")
 
     _validate_source_crs(row, package_crs_epsg, errors)
 
