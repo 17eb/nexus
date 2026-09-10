@@ -19,28 +19,40 @@ task's checklist includes a model change, it holds the migration lock.
       split exist (`nexus/settings/{base,dev,test}.py`), landed early as
       the minimal scaffold for M1; but only one app exists
       (`apps/registry`, not empty) of the six
-- [ ] `Makefile` with `check`, `test`, `dev`, `fixtures`
-- [ ] ruff, mypy, pytest, factory_boy, import-linter configured —
-      **partial**: pytest, factory_boy and import-linter are configured
-      (`pyproject.toml`); ruff and mypy are not added yet
+- [x] `Makefile` with `check`, `test`, `dev`, `fixtures` — `check` runs
+      ruff + mypy + `lint-imports` + pytest; `dev` runs `runserver` and
+      the Vite dev server together; `fixtures` runs `migrate` then
+      `generate_fixture_piles`
+- [x] ruff, mypy, pytest, factory_boy, import-linter configured — ruff
+      and mypy now added (`pyproject.toml`), with django-stubs/
+      djangorestframework-stubs/types-openpyxl so mypy actually checks
+      the Django/DRF code instead of no-op'ing on it; `make check` is
+      green
 - [ ] import-linter contract enforcing module boundaries — with a
       deliberately failing cross-import to prove the rule fires, then
-      removed — **partial**: one contract exists, but scoped inside
+      removed — **still partial**: `lint-imports` is now wired into
+      `make check`, but the contract itself is still scoped inside
       `apps/registry` (`import_piles` internal to `services.py`) — the
-      cross-*module* contract this item means needs the other five apps
-      to exist first, so it isn't built yet
+      cross-*module* contract this item means, and the deliberate-fail
+      demonstration, both still need the other five apps to exist first
 - [ ] GitHub Actions running `make check` on every push
 - [ ] Branch protection on `main` requiring CI green — confirmed not
       set (`main` currently accepts direct pushes)
-- [ ] Vite + React + TS + Tailwind, dark/light theme tokens
-- [ ] i18next wired, one string translated into all five modes to prove it
+- [x] Vite + React + TS + Tailwind, dark/light theme tokens — Tailwind
+      v4 (`@theme` + `@custom-variant dark`), CSS variables in
+      `frontend/src/index.css`, no hardcoded hex elsewhere; dev-mode API
+      access is a Vite proxy (`/api` → `:8000`), not CORS, so there's
+      no Django-side change
+- [x] i18next wired, one string translated into all five modes to prove
+      it — `en`, `ko`, `ja`, `en-ko`, `en-ja` in
+      `frontend/src/i18n/locales/`, verified switching live in-browser
 - [x] `.env.example`; `.env`, `media/`, real project files gitignored
 
 **Done when:** `make check` passes on a fresh clone, CI is green, and the
 import rule demonstrably fails on a cross-module import. **Not yet met**
-— no `Makefile`, no CI, so this milestone is not complete; the items
-above reflect what M1's own scaffolding happened to cover along the way,
-not a deliberate M0 pass.
+— `make check` is green and the `Makefile`/frontend/tooling items above
+are done, but there's still no CI and no deliberate-fail demonstration
+of the import rule, so this milestone isn't complete.
 
 ---
 
