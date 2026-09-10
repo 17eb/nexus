@@ -14,20 +14,33 @@ task's checklist includes a model change, it holds the migration lock.
 
 ## M0 · Foundations (before any feature)
 
-- [ ] Django project, six empty apps, PostgreSQL, settings split
+- [ ] Django project, six empty apps, PostgreSQL, settings split —
+      **partial**: Django project, PostgreSQL config and the settings
+      split exist (`nexus/settings/{base,dev,test}.py`), landed early as
+      the minimal scaffold for M1; but only one app exists
+      (`apps/registry`, not empty) of the six
 - [ ] `Makefile` with `check`, `test`, `dev`, `fixtures`
-- [ ] ruff, mypy, pytest, factory_boy, import-linter configured
+- [ ] ruff, mypy, pytest, factory_boy, import-linter configured —
+      **partial**: pytest, factory_boy and import-linter are configured
+      (`pyproject.toml`); ruff and mypy are not added yet
 - [ ] import-linter contract enforcing module boundaries — with a
       deliberately failing cross-import to prove the rule fires, then
-      removed
+      removed — **partial**: one contract exists, but scoped inside
+      `apps/registry` (`import_piles` internal to `services.py`) — the
+      cross-*module* contract this item means needs the other five apps
+      to exist first, so it isn't built yet
 - [ ] GitHub Actions running `make check` on every push
-- [ ] Branch protection on `main` requiring CI green
+- [ ] Branch protection on `main` requiring CI green — confirmed not
+      set (`main` currently accepts direct pushes)
 - [ ] Vite + React + TS + Tailwind, dark/light theme tokens
 - [ ] i18next wired, one string translated into all five modes to prove it
-- [ ] `.env.example`; `.env`, `media/`, real project files gitignored
+- [x] `.env.example`; `.env`, `media/`, real project files gitignored
 
 **Done when:** `make check` passes on a fresh clone, CI is green, and the
-import rule demonstrably fails on a cross-module import.
+import rule demonstrably fails on a cross-module import. **Not yet met**
+— no `Makefile`, no CI, so this milestone is not complete; the items
+above reflect what M1's own scaffolding happened to cover along the way,
+not a deliberate M0 pass.
 
 ---
 
