@@ -52,7 +52,7 @@ export function CorridorMap({ packageId }: CorridorMapProps) {
       <TileLayer url={ESRI_WORLD_IMAGERY_URL} attribution={ESRI_ATTRIBUTION} />
       <ClusterLayer
         groups={groups}
-        onSelect={(structureId) => navigate(`/structures/${structureId}`)}
+        onSelect={(structureId) => navigate(`/packages/${packageId}/structures/${structureId}`)}
       />
     </MapContainer>
   );

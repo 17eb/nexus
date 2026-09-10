@@ -13,6 +13,7 @@ function pile(
     id: "pile-id",
     pile_no: "P-1",
     label: "A",
+    diameter_mm: 1500,
     pile_cap: { id: "cap-1", ref: "1", cap_type: "standard" },
     structure: { id: "structure-1", ref: "PR01", kind: "viaduct" },
     coordinates: { source: "design", e: "498000.000", n: "1557000.000" },

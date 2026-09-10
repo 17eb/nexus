@@ -1,13 +1,16 @@
 import { Route, Routes } from "react-router-dom";
 
 import { CorridorMapPage } from "./routes/CorridorMapPage";
-import { StructurePlaceholderPage } from "./routes/StructurePlaceholderPage";
+import { StructureDetailPage } from "./routes/StructureDetailPage";
 
 function App() {
   return (
     <Routes>
       <Route path="/packages/:packageId" element={<CorridorMapPage />} />
-      <Route path="/structures/:structureId" element={<StructurePlaceholderPage />} />
+      <Route
+        path="/packages/:packageId/structures/:structureId"
+        element={<StructureDetailPage />}
+      />
     </Routes>
   );
 }

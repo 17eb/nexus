@@ -1,0 +1,51 @@
+/* PilePlanView styling. viewBox units are metres, so SVG "px" lengths
+   below (font-size, unitless numbers) resolve as user units — i.e.
+   metres — scaling proportionally with the drawing. Colors reference the
+   theme custom properties in src/index.css, per CLAUDE.md's frontend
+   conventions: no hardcoded hex here. */
+
+.pile-plan-view {
+  width: 100%;
+  height: 100%;
+}
+
+.pile-plan-view-pile circle {
+  fill: rgb(var(--surface));
+  stroke: rgb(var(--primary));
+  stroke-width: 2;
+}
+
+.pile-plan-view-pile[role="button"] {
+  cursor: pointer;
+}
+
+/* Chrome draws a native focus indicator on a focusable SVG element that
+   scales with the viewBox and renders as a huge solid blob; it isn't a
+   normal CSS outline, so it must be suppressed with !important — draw
+   focus as a thicker stroke on the circle instead (below). */
+.pile-plan-view-pile[role="button"] {
+  outline: none !important;
+}
+
+.pile-plan-view-pile[role="button"]:hover circle,
+.pile-plan-view-pile[role="button"]:focus-visible circle {
+  fill: rgb(var(--primary) / 0.15);
+}
+
+.pile-plan-view-pile[role="button"]:focus-visible circle {
+  stroke-width: 3;
+}
+
+.pile-plan-view-pile text {
+  fill: rgb(var(--foreground));
+  font-size: 0.5px;
+  font-weight: 600;
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+  user-select: none;
+}
+
+.pile-plan-view-empty {
+  color: rgb(var(--muted));
+}

@@ -3,5 +3,12 @@
   "corridorMap.loading": "Loading corridor map… / 코리더 지도를 불러오는 중…",
   "corridorMap.error": "Couldn't load pile data for this package. / 이 패키지의 말뚝 데이터를 불러오지 못했습니다.",
   "corridorMap.empty": "No piles found for this package yet. / 이 패키지에 등록된 말뚝이 아직 없습니다.",
-  "structure.placeholder": "Structure {{structureId}} — detail view coming soon. / 구조물 {{structureId}} — 상세 화면은 준비 중입니다."
+  "structureDetail.loading": "Loading pile data… / 말뚝 데이터를 불러오는 중…",
+  "structureDetail.error": "Couldn't load pile data for this package. / 이 패키지의 말뚝 데이터를 불러오지 못했습니다.",
+  "structureDetail.empty": "No pile caps found for this structure. / 이 구조물에 등록된 말뚝 캡이 없습니다.",
+  "structureDetail.heading": "Structure {{ref}} / 구조물 {{ref}}",
+  "structureDetail.selectedPile": "Selected pile: {{pileNo}} ({{label}}) / 선택된 말뚝: {{pileNo}} ({{label}})",
+  "structureDetail.noPileSelected": "Click a pile to see its details. / 말뚝을 클릭하면 상세 정보를 볼 수 있습니다.",
+  "pilePlanView.empty": "No piles to draw for this cap. / 이 캡에 표시할 말뚝이 없습니다.",
+  "pilePlanView.ariaLabel": "Pile cap plan / 말뚝 캡 평면도"
 }

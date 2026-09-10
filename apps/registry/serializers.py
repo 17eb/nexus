@@ -16,7 +16,15 @@ class PileListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Pile
-        fields = ["id", "pile_no", "label", "pile_cap", "structure", "coordinates"]
+        fields = [
+            "id",
+            "pile_no",
+            "label",
+            "diameter_mm",
+            "pile_cap",
+            "structure",
+            "coordinates",
+        ]
 
     def get_pile_cap(self, obj: Pile) -> dict:
         return {

@@ -45,6 +45,7 @@ def test_design_only_pile_reports_design_source():
     assert response.status_code == 200
     pile = response.json()["piles"][0]
     assert pile["pile_no"] == "P-1"
+    assert pile["diameter_mm"] == 1500
     assert pile["coordinates"] == {"source": "design", "e": "498000.000", "n": "1557000.000"}
 
 
