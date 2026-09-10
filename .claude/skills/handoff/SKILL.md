@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Handoff
 
-Write `planning-docs/handoff.md` for a session that has zero context. Overwrite
+Write `docs/handoff.md` for a session that has zero context. Overwrite
 the file if it exists — git keeps the history.
 
 First run `git status` and `git diff --stat` so the file list is accurate
