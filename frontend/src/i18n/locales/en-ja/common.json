@@ -9,6 +9,15 @@
   "structureDetail.heading": "Structure {{ref}} / 構造物 {{ref}}",
   "structureDetail.selectedPile": "Selected pile: {{pileNo}} ({{label}}) / 選択中の杭: {{pileNo}} ({{label}})",
   "structureDetail.noPileSelected": "Click a pile to see its details. / 杭をクリックすると詳細が表示されます。",
+  "structureDetail.viewPileRecord": "View pile record → / 杭の記録を見る →",
   "pilePlanView.empty": "No piles to draw for this cap. / このキャップに表示する杭がありません。",
-  "pilePlanView.ariaLabel": "Pile cap plan / 杭キャップ平面図"
+  "pilePlanView.ariaLabel": "Pile cap plan / 杭キャップ平面図",
+  "pileRecord.heading": "Pile record / 杭の記録",
+  "pileRecord.loading": "Loading pile documents… / 杭の書類を読み込み中…",
+  "pileRecord.error": "Couldn't load documents for this pile. / この杭の書類を読み込めませんでした。",
+  "pileRecord.empty": "No documents uploaded yet. / まだアップロードされた書類がありません。",
+  "pileRecord.upload": "Upload / アップロード",
+  "pileRecord.uploading": "Uploading… / アップロード中…",
+  "pileRecord.uploadError": "Upload failed. Try again. / アップロードに失敗しました。もう一度お試しください。",
+  "pileRecord.download": "Download / ダウンロード"
 }

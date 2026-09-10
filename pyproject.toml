@@ -52,10 +52,14 @@ django_settings_module = "nexus.settings.dev"
 
 # Cross-module contract: each app in apps/ (identity, registry, testing,
 # submittals, documents, tracking per CLAUDE.md's module layout) must
-# only be reached from outside via its own services.py. Only `registry`
-# exists so far (docs/mvp-plan.md M0) — import-linter needs a module to
-# exist to reference it, so the full cross-app contract lands once the
-# other five apps do. This contract covers what's buildable today.
+# only be reached from outside via its own services.py. `registry` and
+# `documents` exist so far (docs/mvp-plan.md M0/M1) — import-linter needs
+# a module to exist to reference it, so the full cross-app contract
+# lands as the remaining four apps do. This contract covers what's
+# buildable today: registry and documents may each still import the
+# other's `services` module (that's the intended mechanism, not a gap —
+# see registry.views.PackagePilesView and documents.services.request_upload),
+# just never the other's models/admin/other internals directly.
 [tool.importlinter]
 root_package = "apps"
 
@@ -68,4 +72,34 @@ source_modules = [
 ]
 forbidden_modules = [
     "apps.registry.import_piles",
+]
+
+[[tool.importlinter.contracts]]
+name = "documents does not import registry internals"
+type = "forbidden"
+# allow_indirect_imports: documents.services legitimately calls
+# registry.services (which itself imports registry.models internally) —
+# only a DIRECT import of registry.models/admin from within documents is
+# the actual violation this contract guards against.
+allow_indirect_imports = true
+source_modules = [
+    "apps.documents",
+]
+forbidden_modules = [
+    "apps.registry.models",
+    "apps.registry.admin",
+]
+
+[[tool.importlinter.contracts]]
+name = "registry does not import documents internals"
+type = "forbidden"
+# See the sibling contract above — registry.views legitimately calls
+# documents.services (which imports documents.models internally).
+allow_indirect_imports = true
+source_modules = [
+    "apps.registry",
+]
+forbidden_modules = [
+    "apps.documents.models",
+    "apps.documents.admin",
 ]

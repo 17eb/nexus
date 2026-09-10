@@ -15,6 +15,10 @@
   cursor: pointer;
 }
 
+.corridor-map-marker--has-docs {
+  background-color: rgb(var(--success));
+}
+
 .corridor-map-cluster {
   display: flex;
   align-items: center;

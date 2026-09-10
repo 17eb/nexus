@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 import { usePackagePiles } from "../corridor-map/usePackagePiles";
 import { PilePlanView } from "../pile-plan/PilePlanView";
@@ -72,12 +73,20 @@ export function StructureDetail({ packageId, structureId }: StructureDetailProps
       </div>
       <aside className="w-64 shrink-0 border-l border-border p-4">
         {selectedPile ? (
-          <p className="text-foreground">
-            {t("structureDetail.selectedPile", {
-              pileNo: selectedPile.pile_no,
-              label: selectedPile.label,
-            })}
-          </p>
+          <div className="flex flex-col gap-2">
+            <p className="text-foreground">
+              {t("structureDetail.selectedPile", {
+                pileNo: selectedPile.pile_no,
+                label: selectedPile.label,
+              })}
+            </p>
+            <Link
+              className="text-primary underline"
+              to={`/packages/${packageId}/piles/${selectedPile.id}`}
+            >
+              {t("structureDetail.viewPileRecord")}
+            </Link>
+          </div>
         ) : (
           <p className="text-muted">{t("structureDetail.noPileSelected")}</p>
         )}

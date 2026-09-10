@@ -9,6 +9,15 @@
   "structureDetail.heading": "구조물 {{ref}}",
   "structureDetail.selectedPile": "선택된 말뚝: {{pileNo}} ({{label}})",
   "structureDetail.noPileSelected": "말뚝을 클릭하면 상세 정보를 볼 수 있습니다.",
+  "structureDetail.viewPileRecord": "말뚝 기록 보기 →",
   "pilePlanView.empty": "이 캡에 표시할 말뚝이 없습니다.",
-  "pilePlanView.ariaLabel": "말뚝 캡 평면도"
+  "pilePlanView.ariaLabel": "말뚝 캡 평면도",
+  "pileRecord.heading": "말뚝 기록",
+  "pileRecord.loading": "말뚝 문서를 불러오는 중…",
+  "pileRecord.error": "이 말뚝의 문서를 불러오지 못했습니다.",
+  "pileRecord.empty": "아직 업로드된 문서가 없습니다.",
+  "pileRecord.upload": "업로드",
+  "pileRecord.uploading": "업로드 중…",
+  "pileRecord.uploadError": "업로드에 실패했습니다. 다시 시도해 주세요.",
+  "pileRecord.download": "다운로드"
 }

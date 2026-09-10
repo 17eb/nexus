@@ -19,6 +19,7 @@ from .models import ImportRun, Package, Pile
 __all__ = [
     "import_piles",
     "get_piles_for_package",
+    "get_pile",
     "MissingColumnsError",
     "UnsupportedFileTypeError",
 ]
@@ -147,3 +148,10 @@ def get_piles_for_package(package_id: uuid.UUID) -> tuple[Package, QuerySet[Pile
         .order_by("pile_cap__structure__ref", "pile_cap__ref", "label")
     )
     return package, piles
+
+
+def get_pile(pile_id: uuid.UUID) -> Pile:
+    """The single-object counterpart to get_piles_for_package() — for
+    other apps (e.g. documents) that need to validate a pile_id without
+    importing apps.registry.models directly."""
+    return get_object_or_404(Pile, pk=pile_id)

@@ -5,10 +5,14 @@ import { useMap } from "react-leaflet";
 
 import type { PileCapGroup } from "./grouping";
 
-const pileCapIcon = L.divIcon({
-  className: "corridor-map-marker",
-  iconSize: [24, 24],
-});
+function pileCapIcon(group: PileCapGroup) {
+  return L.divIcon({
+    className: group.hasDocuments
+      ? "corridor-map-marker corridor-map-marker--has-docs"
+      : "corridor-map-marker",
+    iconSize: [24, 24],
+  });
+}
 
 function clusterIcon(cluster: L.MarkerCluster) {
   return L.divIcon({
@@ -35,7 +39,7 @@ export function ClusterLayer({ groups, onSelect }: ClusterLayerProps) {
     const clusterGroup = L.markerClusterGroup({ iconCreateFunction: clusterIcon });
 
     for (const group of groups) {
-      const marker = L.marker(group.centroid, { icon: pileCapIcon });
+      const marker = L.marker(group.centroid, { icon: pileCapIcon(group) });
       marker.on("click", () => onSelect(group.structureId));
       marker.bindTooltip(`${group.structureRef} / ${group.pileCapRef}`);
       clusterGroup.addLayer(marker);
