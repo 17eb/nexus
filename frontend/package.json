@@ -6,25 +6,34 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest run"
   },
   "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
     "@tanstack/react-query": "^5",
     "axios": "^1",
     "i18next": "^23",
-    "react-i18next": "^15"
+    "leaflet": "^1.9.4",
+    "leaflet.markercluster": "^1.5.3",
+    "proj4": "^2.22.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-i18next": "^15",
+    "react-leaflet": "^4.2.1",
+    "react-router-dom": "^7.18.3"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4",
     "@tanstack/react-query-devtools": "^5",
+    "@types/leaflet": "^1.9.22",
+    "@types/leaflet.markercluster": "^1.5.6",
     "@types/node": "^24",
     "@types/react": "^18.3",
     "@types/react-dom": "^18.3",
     "@vitejs/plugin-react": "^6.1.0",
     "tailwindcss": "^4",
     "typescript": "~5.9.3",
-    "vite": "^8.2.2"
+    "vite": "^8.2.2",
+    "vitest": "^5.0.0"
   }
 }

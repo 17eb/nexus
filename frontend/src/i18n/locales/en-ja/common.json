@@ -1,3 +1,7 @@
 {
-  "app.title": "Bored Pile Testing Management / 場所打ち杭試験管理"
+  "app.title": "Bored Pile Testing Management / 場所打ち杭試験管理",
+  "corridorMap.loading": "Loading corridor map… / コリドーマップを読み込み中…",
+  "corridorMap.error": "Couldn't load pile data for this package. / このパッケージの杭データを読み込めませんでした。",
+  "corridorMap.empty": "No piles found for this package yet. / このパッケージにはまだ杭が登録されていません。",
+  "structure.placeholder": "Structure {{structureId}} — detail view coming soon. / 構造物 {{structureId}} — 詳細画面は準備中です。"
 }

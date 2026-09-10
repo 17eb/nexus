@@ -8,6 +8,7 @@ from rest_framework.test import APIClient
 
 from apps.registry import services
 from apps.registry.factories import PackageFactory, PileCapFactory, PileFactory
+from apps.registry.models import PileCap
 
 from .helpers import ASBUILT_HEADERS, DESIGN_HEADERS, asbuilt_row, design_row, make_csv_bytes
 
@@ -97,8 +98,17 @@ def test_pile_cap_and_structure_nested_fields():
     response = client.get(piles_url(package.id))
 
     pile = response.json()["piles"][0]
-    assert pile["pile_cap"] == {"ref": "2", "cap_type": "straddle"}
-    assert pile["structure"] == {"ref": "PR07", "kind": "station"}
+    pile_cap = PileCap.objects.get(structure__package=package, ref="2")
+    assert pile["pile_cap"] == {
+        "id": str(pile_cap.id),
+        "ref": "2",
+        "cap_type": "straddle",
+    }
+    assert pile["structure"] == {
+        "id": str(pile_cap.structure.id),
+        "ref": "PR07",
+        "kind": "station",
+    }
 
 
 def test_unknown_package_returns_404():
