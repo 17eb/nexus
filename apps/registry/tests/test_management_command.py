@@ -22,7 +22,7 @@ def _write_csv(tmp_path, rows, name="piles.csv"):
 
 
 def test_default_invocation_is_a_dry_run(tmp_path):
-    package = PackageFactory(code="S-05", crs_epsg=3123)
+    PackageFactory(code="S-05", crs_epsg=3123)
     path = _write_csv(tmp_path, [design_row(pile_no="P-1", label="A")])
 
     out = io.StringIO()
@@ -33,7 +33,7 @@ def test_default_invocation_is_a_dry_run(tmp_path):
 
 
 def test_apply_flag_commits(tmp_path):
-    package = PackageFactory(code="S-05", crs_epsg=3123)
+    PackageFactory(code="S-05", crs_epsg=3123)
     path = _write_csv(tmp_path, [design_row(pile_no="P-1", label="A")])
 
     out = io.StringIO()
@@ -53,7 +53,7 @@ def test_unknown_package_raises_command_error(tmp_path):
 
 
 def test_exit_code_1_when_report_has_errors(tmp_path):
-    package = PackageFactory(code="S-05", crs_epsg=3123)
+    PackageFactory(code="S-05", crs_epsg=3123)
     path = _write_csv(tmp_path, [design_row(pile_no="P-1", label="A", diameter="-1")])
 
     with pytest.raises(SystemExit) as exc_info:
@@ -62,7 +62,7 @@ def test_exit_code_1_when_report_has_errors(tmp_path):
 
 
 def test_reparented_warning_shown_in_dry_run_output(tmp_path):
-    package = PackageFactory(code="S-05", crs_epsg=3123)
+    PackageFactory(code="S-05", crs_epsg=3123)
     call_command(
         "import_piles",
         _write_csv(tmp_path, [design_row(pile_no="P-1", label="A", pile_cap_ref="1")], "first.csv"),

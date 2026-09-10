@@ -95,7 +95,7 @@ def _map_headers(raw_headers: list[str]) -> dict[int, str]:
 def _read_csv_rows(file_obj: IO[bytes]) -> list[list[str]]:
     text_stream = io.TextIOWrapper(file_obj, encoding="utf-8-sig", newline="")
     reader = csv.reader(text_stream)
-    return [row for row in reader]
+    return list(reader)
 
 
 def _read_xlsx_rows(file_obj: IO[bytes]) -> list[list[str]]:

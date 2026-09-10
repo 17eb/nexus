@@ -64,7 +64,7 @@ def upsert_design_row(
             raise DomainError(
                 f"pile_no: {clean['pile_no']!r} belongs to package "
                 f"{other_package.code!r}, not {package.code!r}"
-            )
+            ) from None
         Pile.objects.create(
             pile_no=clean["pile_no"], created_by_run=import_run, **design_fields
         )
@@ -107,10 +107,10 @@ def upsert_asbuilt_row(
             raise DomainError(
                 f"pile_no: {clean['pile_no']!r} belongs to package "
                 f"{other_package.code!r}, not {package.code!r}"
-            )
+            ) from None
         raise DomainError(
             f"pile_no: {clean['pile_no']!r} does not exist — run a design import first"
-        )
+        ) from None
 
     asbuilt_fields = {
         "asbuilt_e": clean["easting"],

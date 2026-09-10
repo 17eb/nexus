@@ -66,6 +66,7 @@ def make_csv_bytes(headers: list[str], rows: list[list[str]]) -> io.BytesIO:
 def make_xlsx_bytes(headers: list[str], rows: list[list[str]]) -> io.BytesIO:
     workbook = openpyxl.Workbook()
     sheet = workbook.active
+    assert sheet is not None  # always true for a freshly created Workbook
     sheet.append(headers)
     for row in rows:
         sheet.append(row)

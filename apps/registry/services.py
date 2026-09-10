@@ -71,7 +71,7 @@ def import_piles(
 
             if not errors and pile_no in seen_pile_nos:
                 clean = None
-                errors = [f"pile_no: duplicate within this file (already seen earlier)"]
+                errors = ["pile_no: duplicate within this file (already seen earlier)"]
 
             if errors:
                 row_reports.append(
@@ -80,6 +80,10 @@ def import_piles(
                 errored += 1
                 continue
 
+            # Invariant: validate_*_row only returns no errors alongside a
+            # non-None `clean` dict and a non-blank pile_no.
+            assert clean is not None
+            assert pile_no is not None
             seen_pile_nos.add(pile_no)
 
             try:
@@ -101,6 +105,7 @@ def import_piles(
             elif row_report.outcome == "changed":
                 changed += 1
                 if "pile_cap" in row_report.changed_fields:
+                    assert row_report.pile_no is not None
                     reparented.append(row_report.pile_no)
             else:
                 errored += 1

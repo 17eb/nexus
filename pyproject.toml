@@ -10,12 +10,20 @@ dependencies = [
     "openpyxl>=3.1",
 ]
 
+[tool.setuptools.packages.find]
+include = ["apps*", "nexus*"]
+
 [project.optional-dependencies]
 dev = [
     "pytest>=8",
     "pytest-django>=4.8",
     "factory_boy>=3.3",
     "import-linter>=2.0",
+    "ruff>=0.6",
+    "mypy>=1.11",
+    "django-stubs[compatible-mypy]>=5.0",
+    "djangorestframework-stubs>=3.15",
+    "types-openpyxl>=3.1",
 ]
 
 [tool.pytest.ini_options]
@@ -23,6 +31,31 @@ DJANGO_SETTINGS_MODULE = "nexus.settings.test"
 python_files = ["test_*.py"]
 testpaths = ["apps"]
 
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+src = ["apps", "nexus"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "C4", "DJ"]
+
+[tool.ruff.lint.per-file-ignores]
+"*/migrations/*.py" = ["E501"]
+
+[tool.mypy]
+python_version = "3.12"
+plugins = ["mypy_django_plugin.main", "mypy_drf_plugin.main"]
+exclude = "migrations/"
+
+[tool.django-stubs]
+django_settings_module = "nexus.settings.dev"
+
+# Cross-module contract: each app in apps/ (identity, registry, testing,
+# submittals, documents, tracking per CLAUDE.md's module layout) must
+# only be reached from outside via its own services.py. Only `registry`
+# exists so far (docs/mvp-plan.md M0) — import-linter needs a module to
+# exist to reference it, so the full cross-app contract lands once the
+# other five apps do. This contract covers what's buildable today.
 [tool.importlinter]
 root_package = "apps"
 
