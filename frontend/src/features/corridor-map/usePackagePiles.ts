@@ -8,6 +8,8 @@ export interface PackagePilesResponse {
     id: string;
     pile_no: string;
     label: string;
+    diameter_mm: number;
+    has_documents: boolean;
     pile_cap: { id: string; ref: string; cap_type: string };
     structure: { id: string; ref: string; kind: string };
     coordinates: { source: "design" | "as_built"; e: string; n: string };

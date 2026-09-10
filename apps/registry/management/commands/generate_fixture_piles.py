@@ -11,8 +11,9 @@ FIXTURE_DIR = Path(apps.get_app_config("registry").path) / "fixtures" / "synthet
 
 class Command(BaseCommand):
     help = (
-        "Loads the synthetic S-05 package (six piers, mixed 4/6/9-pile caps, "
-        "one straddle cap, EPSG:3123 coordinates) via the real import path."
+        "Loads the synthetic S-05 package (seven piers, mixed 3/4/6/9-pile "
+        "caps, one straddle cap, EPSG:3123 coordinates) via the real import "
+        "path."
     )
 
     def handle(self, *args, **options):

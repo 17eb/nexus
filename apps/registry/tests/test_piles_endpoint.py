@@ -6,9 +6,10 @@ from django.test.utils import CaptureQueriesContext
 from django.urls import reverse
 from rest_framework.test import APIClient
 
+from apps.documents.factories import DocumentFactory
 from apps.registry import services
 from apps.registry.factories import PackageFactory, PileCapFactory, PileFactory
-from apps.registry.models import PileCap
+from apps.registry.models import Pile, PileCap
 
 from .helpers import ASBUILT_HEADERS, DESIGN_HEADERS, asbuilt_row, design_row, make_csv_bytes
 
@@ -45,6 +46,7 @@ def test_design_only_pile_reports_design_source():
     assert response.status_code == 200
     pile = response.json()["piles"][0]
     assert pile["pile_no"] == "P-1"
+    assert pile["diameter_mm"] == 1500
     assert pile["coordinates"] == {"source": "design", "e": "498000.000", "n": "1557000.000"}
 
 
@@ -109,6 +111,31 @@ def test_pile_cap_and_structure_nested_fields():
         "ref": "PR07",
         "kind": "station",
     }
+
+
+def test_has_documents_reflects_document_presence():
+    package = PackageFactory(crs_epsg=3123)
+    services.import_piles(
+        package=package,
+        coordinate_type="design",
+        file_obj=make_csv_bytes(
+            DESIGN_HEADERS,
+            [
+                design_row(pile_no="P-1", label="A", pile_cap_ref="1"),
+                design_row(pile_no="P-2", label="B", pile_cap_ref="1"),
+            ],
+        ),
+        filename="design.csv",
+        apply=True,
+    )
+    pile_with_doc = Pile.objects.get(pile_no="P-1")
+    DocumentFactory(pile=pile_with_doc)
+    client = APIClient()
+
+    response = client.get(piles_url(package.id))
+
+    by_pile_no = {p["pile_no"]: p["has_documents"] for p in response.json()["piles"]}
+    assert by_pile_no == {"P-1": True, "P-2": False}
 
 
 def test_unknown_package_returns_404():

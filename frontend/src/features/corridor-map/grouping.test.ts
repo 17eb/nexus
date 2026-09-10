@@ -13,6 +13,8 @@ function pile(
     id: "pile-id",
     pile_no: "P-1",
     label: "A",
+    diameter_mm: 1500,
+    has_documents: false,
     pile_cap: { id: "cap-1", ref: "1", cap_type: "standard" },
     structure: { id: "structure-1", ref: "PR01", kind: "viaduct" },
     coordinates: { source: "design", e: "498000.000", n: "1557000.000" },
@@ -52,5 +54,27 @@ describe("groupPilesByCap", () => {
     const groups = groupPilesByCap(piles, EPSG);
 
     expect(groups.map((g) => g.pileCapId).sort()).toEqual(["cap-1", "cap-2"]);
+  });
+
+  it("sets hasDocuments true if any pile in the cap has documents", () => {
+    const piles = [
+      pile({ id: "p1", has_documents: false }),
+      pile({ id: "p2", has_documents: true }),
+    ];
+
+    const groups = groupPilesByCap(piles, EPSG);
+
+    expect(groups[0].hasDocuments).toBe(true);
+  });
+
+  it("sets hasDocuments false if no pile in the cap has documents", () => {
+    const piles = [
+      pile({ id: "p1", has_documents: false }),
+      pile({ id: "p2", has_documents: false }),
+    ];
+
+    const groups = groupPilesByCap(piles, EPSG);
+
+    expect(groups[0].hasDocuments).toBe(false);
   });
 });

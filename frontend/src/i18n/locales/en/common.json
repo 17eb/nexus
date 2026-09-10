@@ -3,5 +3,21 @@
   "corridorMap.loading": "Loading corridor map…",
   "corridorMap.error": "Couldn't load pile data for this package.",
   "corridorMap.empty": "No piles found for this package yet.",
-  "structure.placeholder": "Structure {{structureId}} — detail view coming soon."
+  "structureDetail.loading": "Loading pile data…",
+  "structureDetail.error": "Couldn't load pile data for this package.",
+  "structureDetail.empty": "No pile caps found for this structure.",
+  "structureDetail.heading": "Structure {{ref}}",
+  "structureDetail.selectedPile": "Selected pile: {{pileNo}} ({{label}})",
+  "structureDetail.noPileSelected": "Click a pile to see its details.",
+  "structureDetail.viewPileRecord": "View pile record →",
+  "pilePlanView.empty": "No piles to draw for this cap.",
+  "pilePlanView.ariaLabel": "Pile cap plan",
+  "pileRecord.heading": "Pile record",
+  "pileRecord.loading": "Loading pile documents…",
+  "pileRecord.error": "Couldn't load documents for this pile.",
+  "pileRecord.empty": "No documents uploaded yet.",
+  "pileRecord.upload": "Upload",
+  "pileRecord.uploading": "Uploading…",
+  "pileRecord.uploadError": "Upload failed. Try again.",
+  "pileRecord.download": "Download"
 }

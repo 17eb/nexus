@@ -3,5 +3,21 @@
   "corridorMap.loading": "コリドーマップを読み込み中…",
   "corridorMap.error": "このパッケージの杭データを読み込めませんでした。",
   "corridorMap.empty": "このパッケージにはまだ杭が登録されていません。",
-  "structure.placeholder": "構造物 {{structureId}} — 詳細画面は準備中です。"
+  "structureDetail.loading": "杭データを読み込み中…",
+  "structureDetail.error": "このパッケージの杭データを読み込めませんでした。",
+  "structureDetail.empty": "この構造物に登録された杭キャップがありません。",
+  "structureDetail.heading": "構造物 {{ref}}",
+  "structureDetail.selectedPile": "選択中の杭: {{pileNo}} ({{label}})",
+  "structureDetail.noPileSelected": "杭をクリックすると詳細が表示されます。",
+  "structureDetail.viewPileRecord": "杭の記録を見る →",
+  "pilePlanView.empty": "このキャップに表示する杭がありません。",
+  "pilePlanView.ariaLabel": "杭キャップ平面図",
+  "pileRecord.heading": "杭の記録",
+  "pileRecord.loading": "杭の書類を読み込み中…",
+  "pileRecord.error": "この杭の書類を読み込めませんでした。",
+  "pileRecord.empty": "まだアップロードされた書類がありません。",
+  "pileRecord.upload": "アップロード",
+  "pileRecord.uploading": "アップロード中…",
+  "pileRecord.uploadError": "アップロードに失敗しました。もう一度お試しください。",
+  "pileRecord.download": "ダウンロード"
 }

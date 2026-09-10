@@ -23,6 +23,7 @@
   --primary: 37 99 235;
   --primary-foreground: 255 255 255;
   --danger: 220 38 38;
+  --success: 22 163 74;
 }
 
 .dark {
@@ -34,6 +35,7 @@
   --primary: 96 165 250;
   --primary-foreground: 15 23 42;
   --danger: 248 113 113;
+  --success: 74 222 128;
 }
 
 @theme {
@@ -45,6 +47,7 @@
   --color-primary: rgb(var(--primary));
   --color-primary-foreground: rgb(var(--primary-foreground));
   --color-danger: rgb(var(--danger));
+  --color-success: rgb(var(--success));
 }
 
 body {

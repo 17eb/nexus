@@ -9,6 +9,7 @@ export interface PileCapGroup {
   structureKind: string;
   centroid: [number, number];
   pileCount: number;
+  hasDocuments: boolean;
 }
 
 /**
@@ -44,6 +45,7 @@ export function groupPilesByCap(
       structureKind: first.structure.kind,
       centroid: projectToWgs84(epsg, avgE, avgN),
       pileCount: group.length,
+      hasDocuments: group.some((p) => p.has_documents),
     };
   });
 }

@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "apps.registry",
+    "apps.documents",
 ]
 
 MIDDLEWARE = [
@@ -88,3 +89,28 @@ LANGUAGE_CODE = "en-us"
 USE_I18N = True
 
 STATIC_URL = "static/"
+
+# Files: django-storages, filesystem backend locally, S3-compatible in
+# prod (CLAUDE.md). Django's own FileSystemStorage covers "filesystem
+# locally" — django-storages itself only adds non-default backends
+# (S3Boto3Storage, etc.), which nothing exercises yet, so it isn't a
+# dependency until a prod backend is actually wired up. Swapping later
+# is a one-line BACKEND change here plus one branch inside
+# documents.services._presign().
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
+MEDIA_ROOT = BASE_DIR / "media"
+
+# First real use of the DomainError -> HTTP status pattern CLAUDE.md
+# documents (apps/documents/services.py raises DomainError subclasses;
+# registry's own DomainError, in import_piles/upsert.py, never reaches
+# HTTP so it never needed this).
+REST_FRAMEWORK = {
+    "EXCEPTION_HANDLER": "nexus.exceptions.handle_domain_error",
+}

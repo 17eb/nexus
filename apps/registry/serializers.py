@@ -13,10 +13,20 @@ class PileListSerializer(serializers.ModelSerializer):
     pile_cap = serializers.SerializerMethodField()
     structure = serializers.SerializerMethodField()
     coordinates = serializers.SerializerMethodField()
+    has_documents = serializers.SerializerMethodField()
 
     class Meta:
         model = Pile
-        fields = ["id", "pile_no", "label", "pile_cap", "structure", "coordinates"]
+        fields = [
+            "id",
+            "pile_no",
+            "label",
+            "diameter_mm",
+            "pile_cap",
+            "structure",
+            "coordinates",
+            "has_documents",
+        ]
 
     def get_pile_cap(self, obj: Pile) -> dict:
         return {
@@ -39,3 +49,8 @@ class PileListSerializer(serializers.ModelSerializer):
             "e": str(obj.display_e),
             "n": str(obj.display_n),
         }
+
+    def get_has_documents(self, obj: Pile) -> bool:
+        # Batched once per request into context by the view — never a
+        # per-pile query. See PackagePilesView.get().
+        return obj.id in self.context.get("pile_ids_with_documents", set())
