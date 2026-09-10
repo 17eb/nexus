@@ -1,3 +1,7 @@
 {
-  "app.title": "場所打ち杭試験管理"
+  "app.title": "場所打ち杭試験管理",
+  "corridorMap.loading": "コリドーマップを読み込み中…",
+  "corridorMap.error": "このパッケージの杭データを読み込めませんでした。",
+  "corridorMap.empty": "このパッケージにはまだ杭が登録されていません。",
+  "structure.placeholder": "構造物 {{structureId}} — 詳細画面は準備中です。"
 }

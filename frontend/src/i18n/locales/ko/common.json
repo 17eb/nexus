@@ -1,3 +1,7 @@
 {
-  "app.title": "천공말뚝 시험 관리"
+  "app.title": "천공말뚝 시험 관리",
+  "corridorMap.loading": "코리더 지도를 불러오는 중…",
+  "corridorMap.error": "이 패키지의 말뚝 데이터를 불러오지 못했습니다.",
+  "corridorMap.empty": "이 패키지에 등록된 말뚝이 아직 없습니다.",
+  "structure.placeholder": "구조물 {{structureId}} — 상세 화면은 준비 중입니다."
 }
