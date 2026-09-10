@@ -42,7 +42,12 @@ workflow. Everything else is built on top of it.
       one straddle cap, realistic EPSG:3123 coordinates
 - [ ] CSV/XLSX pile import with dry-run, per-row errors, idempotent
       re-import matched on `pile_no`
-- [ ] `GET /api/v1/packages/{id}/piles` returning coordinates + status
+- [x] `GET /api/v1/packages/{id}/piles` returning coordinates — **not
+      status**: no `PileActivity`/`Document` data exists yet to derive
+      one from (`testing`/`documents` apps don't exist), so that part of
+      this line isn't built. Unauthenticated pending M2's
+      `check_permission()`; see `# TODO(M2)` on the queryset in
+      `apps/registry/services.py`.
 - [ ] `CorridorMap`: Leaflet, Esri World Imagery basemap, proj4
       EPSG:3123 → WGS84, one marker per pier, clustered
 - [ ] `PilePlanView`: SVG cap plan from pile coordinates, rotated to

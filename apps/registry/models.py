@@ -193,3 +193,21 @@ class Pile(TimestampedModel):
 
     def __str__(self) -> str:
         return f"{self.pile_no} ({self.pile_cap})"
+
+    @property
+    def coordinate_source(self) -> str:
+        """docs/data-model.md's coordinate display rule: use as-built
+        when present, otherwise design. asbuilt_e/asbuilt_n are always
+        written together (upsert_asbuilt_row), never independently, so
+        checking one is a reliable presence check for both."""
+        if self.asbuilt_e is not None and self.asbuilt_n is not None:
+            return "as_built"
+        return "design"
+
+    @property
+    def display_e(self):
+        return self.asbuilt_e if self.coordinate_source == "as_built" else self.design_e
+
+    @property
+    def display_n(self):
+        return self.asbuilt_n if self.coordinate_source == "as_built" else self.design_n

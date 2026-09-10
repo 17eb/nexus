@@ -4,17 +4,21 @@ under registry/import_piles/ is a public API (enforced by the
 import-linter contract in pyproject.toml)."""
 
 import dataclasses
+import uuid
 from typing import IO
 
 from django.db import IntegrityError, transaction
+from django.db.models import QuerySet
+from django.shortcuts import get_object_or_404
 
 from .import_piles import upsert, validators
 from .import_piles.parser import MissingColumnsError, UnsupportedFileTypeError, parse_rows
 from .import_piles.report import CoordinateType, ImportReport, RowReport
-from .models import ImportRun, Package
+from .models import ImportRun, Package, Pile
 
 __all__ = [
     "import_piles",
+    "get_piles_for_package",
     "MissingColumnsError",
     "UnsupportedFileTypeError",
 ]
@@ -126,3 +130,15 @@ def import_piles(
         import_run_id=import_run.id if apply else None,
         rows=row_reports,
     )
+
+
+def get_piles_for_package(package_id: uuid.UUID) -> tuple[Package, QuerySet[Pile]]:
+    package = get_object_or_404(Package, pk=package_id)
+    # TODO(M2): scope to the requesting user's memberships once
+    # check_permission() exists — list endpoints must fail closed.
+    piles = (
+        Pile.objects.filter(pile_cap__structure__package=package)
+        .select_related("pile_cap", "pile_cap__structure")
+        .order_by("pile_cap__structure__ref", "pile_cap__ref", "label")
+    )
+    return package, piles
